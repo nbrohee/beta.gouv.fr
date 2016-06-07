@@ -2,12 +2,26 @@
 layout: default
 ---
 
+{% if page.startup %}
+	{% capture id %}/startup/{{ page.startup }}{% endcapture %}
+	{% for currentStartup in site.startup %}
+		{% if currentStartup.id == id %} {% comment %} where query doesn't work on id {% endcomment %}
+			{% assign startup = currentStartup %}
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
 <div id="masthead">
-	<h1>{{ page.title}}</h1>
+	<h1>{% if startup %}[{{ startup.title }}] {% endif %}{{ page.title}}</h1>
 </div>
 
 <main class="ui text container">
-	{{ content }}
+	{% if startup %}
+		{{ page.excerpt }}
+		{% include startup-card.html description=startup %}
+	{% endif %}
+
+	{{ content | remove: page.excerpt }}
 
 	{% if page.category == 'evenement' %}
 		<div class="vevent">

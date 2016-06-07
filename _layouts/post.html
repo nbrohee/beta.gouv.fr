@@ -18,7 +18,8 @@ layout: default
 <main class="ui text container">
 	{% if startup %}
 		{{ page.excerpt }}
-		{% include startup-card.html description=startup %}
+
+		<aside>{% include startup-card.html description=startup %}</aside>
 	{% endif %}
 
 	{{ content | remove: page.excerpt }}
